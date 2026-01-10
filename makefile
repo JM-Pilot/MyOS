@@ -9,17 +9,19 @@ LDFLAGS = -ffreestanding -nostdlib -O2 -lgcc
 
 all: compile iso run
 
-OFILES = ${BIN}/boot.o ${BIN}/kernel.o ${BIN}/vga.o
+OFILES = $(wildcard bin/*.o)
 compile:
 	mkdir -p bin
-	${AS} ${SRC}/boot.s -o ${BIN}/boot.o
+	${AS} ${SRC}/x86/boot.s -o ${BIN}/boot.o
 	${CC} -c ${SRC}/kernel.c -o ${BIN}/kernel.o ${CFLAGS}
 	${CC} -c ${SRC}/vga.c -o ${BIN}/vga.o ${CFLAGS}
+	${CC} -c ${SRC}/port_io.c -o ${BIN}/port_io.o ${CFLAGS}
 
-	${CC} -T ${SRC}/linker.ld ${OFILES} -o ${BIN}/MyOS.bin ${LDFLAGS}
+	${CC} -T ${SRC}/x86/linker.ld ${OFILES} -o ${BIN}/MyOS.bin ${LDFLAGS}
 iso:
 	cp ${BIN}/MyOS.bin isodir/boot/MyOS.bin
-	cp ${SRC}/grub.cfg isodir/boot/grub/grub.cfg
 	grub-mkrescue -o ${BIN}/MyOS.iso isodir
 run:
 	qemu-system-i386 -cdrom ${BIN}/MyOS.iso
+clean:
+	rm -rf bin/*
