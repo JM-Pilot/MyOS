@@ -19,11 +19,15 @@ compile:
 
 	${CC} -c ${SRC}/x86/gdt.c -o ${BIN}/gdt_c.o ${CFLAGS}
 	${AS} ${SRC}/x86/gdt.s -o ${BIN}/gdt_s.o
+
+	${CC} -c ${SRC}/x86/idt.c -o ${BIN}/idt_c.o ${CFLAGS}
+	nasm -felf32 ${SRC}/x86/idt.s -o ${BIN}/idt_s.o
+
 	${CC} -T ${SRC}/x86/linker.ld ${OFILES} -o ${BIN}/MyOS.bin ${LDFLAGS}
 iso:
 	cp ${BIN}/MyOS.bin isodir/boot/MyOS.bin
 	grub-mkrescue -o ${BIN}/MyOS.iso isodir
 run:
-	qemu-system-i386 -cdrom ${BIN}/MyOS.iso
+	qemu-system-i386 -cdrom ${BIN}/MyOS.iso -no-shutdown -no-reboot -serial stdio -d int
 clean:
 	rm -rf bin/*
