@@ -9,6 +9,7 @@ LDFLAGS = -ffreestanding -nostdlib -O2 -lgcc
 
 all: compile iso run
 compile:
+	mkdir -p bin
 	${AS} ${SRC}/boot.s -o ${BIN}/boot.o
 	${CC} -c ${SRC}/kernel.c -o ${BIN}/kernel.o ${CFLAGS}
 
