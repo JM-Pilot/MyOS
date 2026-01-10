@@ -17,6 +17,8 @@ compile:
 	${CC} -c ${SRC}/vga.c -o ${BIN}/vga.o ${CFLAGS}
 	${CC} -c ${SRC}/port_io.c -o ${BIN}/port_io.o ${CFLAGS}
 
+	${CC} -c ${SRC}/x86/gdt.c -o ${BIN}/gdt_c.o ${CFLAGS}
+	${AS} ${SRC}/x86/gdt.s -o ${BIN}/gdt_s.o
 	${CC} -T ${SRC}/x86/linker.ld ${OFILES} -o ${BIN}/MyOS.bin ${LDFLAGS}
 iso:
 	cp ${BIN}/MyOS.bin isodir/boot/MyOS.bin
