@@ -1,0 +1,6 @@
+/bin/*.bin
+/bin/*.iso
+/bin/*.o
+/boot/MyOS.bin
+.vscode
+QEMU_LOG.txt
