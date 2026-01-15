@@ -1,15 +1,13 @@
 #include <stdint.h>
 #include <x86_64/idt.h>
-
+#include <kernel/panic.h>
+#include <kernel/tty.h>
 idt_entry_t idt[IDT_MAX_DESCRIPTORS];
 idtr_t idtr;
 bool vectors[IDT_MAX_DESCRIPTORS];
 
 void exception_handler() {
-	asm volatile ("cli");
-	for (;;){
-		asm volatile ("hlt");
-	}
+	kernel_panic("EXECPTION HANDLER: ERROR! INTERRUPT REACHED\n CPU HAS HALTED");
 }
 
 void idt_set_descriptor(uint8_t vector, void* isr, uint8_t flags){

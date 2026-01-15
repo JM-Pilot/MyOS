@@ -1,6 +1,6 @@
 #include <x86_64/gdt.h>
 #include <stdint.h>
-
+#include <kernel/tty.h>
 gdt_entry_t gdt[3];
 gdt_ptr_t gdt_ptr;
 

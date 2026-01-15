@@ -1,7 +1,9 @@
 #ifndef PANIC_H
 #define PANIC_H
 
-// Halt the cpu forever. 
-// @warning !! DO NOT USE UNLESS ITS NECESSARY !!
+
+void kernel_panic(const char* msg);
+
+// Halt the cpu forever without warning. 
 void cpu_haltf();
 #endif
