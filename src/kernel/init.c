@@ -2,6 +2,7 @@
 #include "../drivers/vga.h"
 #include "../arch/x86/gdt.h"
 #include "../arch/x86/idt.h"
+#include "../arch/x86/irq.h"
 void kernel_init_all(){
 	vga_init();
 	kprintf("VGA Initialized\n");
@@ -9,4 +10,6 @@ void kernel_init_all(){
 	kprintf("GDT Initialized\n");
 	idt_init();
 	kprintf("IDT Initialized\n");
+	irq_init();
+	kprintf("IRQ Initialized\n");
 }

@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include "idt.h"
+#include "irq.h"
 #include "../../kernel/kernel.h"
 #include "../../drivers/vga.h"
 
@@ -28,6 +29,9 @@ void isr_exception_handler(struct registers *reg){
 	vga_cursor_x = 0;
 	vga_cursor_y = 0;
 	vga_color_fg = VGA_COLOR_LIGHT_RED;
+	if (reg->int_no >= 32){
+		irq_handler(reg);
+	}
 	if (reg->int_no < 32){
 		kprintf("INTERRUPT REACHED!\tERROR: %d\t(%s)\n", reg->int_no, (reg->int_no < 19 ? exception_messages[reg->err_code] : "reserved"));
 		kprintf("REBOOT YOUR COMPUTER\n");
