@@ -4,4 +4,5 @@
 
 void kprintf(const char *str, ...);
 void hcf();
+void kernel_init_all();
 #endif

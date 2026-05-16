@@ -1,11 +1,13 @@
 #include "kernel.h"
 #include "../drivers/vga.h"
+#include "kernel.h"
 void hcf(){
 	asm volatile ("cli");
 	for (;;)
 		asm volatile ("hlt");
 }
 void kernel_main(){
-	vga_init();
+	asm volatile ("cli");
+	kernel_init_all();
 	hcf();
 }
