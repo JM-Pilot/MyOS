@@ -1,3 +1,4 @@
+#include "idt.h"
 #ifndef IRQ_H
 #define IRQ_H
 

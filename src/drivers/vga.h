@@ -39,4 +39,5 @@ void vga_printch(char c);
 void vga_printstr(const char *s);
 void vga_printint(int val);
 void vga_printhex(uint32_t val);
+void vga_scroll_up();
 #endif

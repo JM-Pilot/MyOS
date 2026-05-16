@@ -15,6 +15,18 @@ void vga_init(){
 	vga_color_fg = VGA_COLOR_WHITE;
 	vga_color_bg = VGA_COLOR_BLACK;
 }
+
+void vga_scroll_up(){
+	for (int y = 1; y < VGA_HEIGHT; y++)
+        	for (int x = 0; x < VGA_WIDTH; x++)
+        		vga[get_vga_cell_pos(x, y-1)] = vga[get_vga_cell_pos(x, y)];
+
+	uint8_t color = vga_mk_color(vga_color_fg, vga_color_bg);
+	for (int x = 0; x < VGA_WIDTH; x++)
+		vga[get_vga_cell_pos(x, VGA_HEIGHT-1)] = vga_mk_entry(' ', color);
+	vga_cursor_y--;
+}
+
 uint8_t vga_mk_color(vga_color_t fg, vga_color_t bg){
 	return (fg | bg << 4);
 }
@@ -31,7 +43,7 @@ void vga_printch(char c){
 			vga_cursor_x = 0;
 			vga_cursor_y++;
 			if (vga_cursor_y >= VGA_HEIGHT){
-				vga_cursor_y = 0;
+				vga_scroll_up();
 			}
 			return;
 		case '\r':
@@ -56,8 +68,7 @@ void vga_printch(char c){
 		vga_cursor_y++;
 	}
 	if (vga_cursor_y >= VGA_HEIGHT){
-		vga_cursor_x = 0;
-		vga_cursor_y = 0;
+		vga_scroll_up();
 	}
 }
 void vga_printstr(const char *s){

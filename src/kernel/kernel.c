@@ -10,5 +10,7 @@ void kernel_main(){
 	asm volatile ("cli");
 	kernel_init_all();
 	asm volatile ("sti");
+	while (1) { }
+	
 	hcf();
 }
