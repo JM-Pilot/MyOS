@@ -57,3 +57,37 @@ void vga_printstr(const char *s){
 	for (int i = 0; s[i] != '\0'; i++)
 		vga_printch(s[i]);
 }
+void vga_printint(int val){
+	int i, sign;
+	char buffer[10];
+	if ((sign = val) < 0){
+		val = -val;
+	}
+	i = 0;
+	do {
+		buffer[i++] = val % 10 + '0';
+	} while ((val /= 10) > 0);
+
+	if (sign < 0){
+		buffer[i++] = '-';
+	}
+	while (i-- > 0)
+		vga_printch(buffer[i]);
+}
+
+void vga_printhex(uint32_t val){
+	char hex_val[] = "0123456789ABCDEF";
+	char buffer[9];
+	int i = 0;
+	if (val == 0){
+		vga_printch('0');
+		return;
+	}
+	while (val){
+		buffer[i++] = hex_val[val & 0x0F];
+		val >>= 4;
+	}
+	vga_printstr("0x");
+	while (i-- > 0)
+		vga_printch(buffer[i]);
+}

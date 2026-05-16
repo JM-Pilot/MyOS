@@ -37,4 +37,6 @@ uint16_t vga_mk_entry(uint8_t c, uint8_t color);
 void vga_mk_entry_at(uint8_t c, uint8_t color, uint8_t x, uint8_t y);
 void vga_printch(char c);
 void vga_printstr(const char *s);
+void vga_printint(int val);
+void vga_printhex(uint32_t val);
 #endif

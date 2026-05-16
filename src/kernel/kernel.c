@@ -7,6 +7,5 @@ void hcf(){
 }
 void kernel_main(){
 	vga_init();
-	vga_printstr("Hello World!\n");
 	hcf();
 }
