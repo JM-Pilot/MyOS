@@ -1,3 +1,4 @@
+#include "kernel.h"
 void hcf(){
 	asm volatile ("cli");
 	for (;;)
