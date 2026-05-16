@@ -41,6 +41,13 @@ void vga_printch(char c){
 			if (vga_cursor_x == 0) return;
 			vga_cursor_x--;
 			return;
+		case '\t':
+			if (vga_cursor_x + 4 >= VGA_WIDTH && vga_cursor_y < VGA_HEIGHT){
+				vga_cursor_x = 0;
+				vga_cursor_y++;
+			}
+			vga_cursor_x += 4;
+			return;
 	}
 	vga[get_vga_cell_pos(vga_cursor_x++, vga_cursor_y)] = 
 	vga_mk_entry(c, vga_mk_color(vga_color_fg, vga_color_bg));
@@ -75,19 +82,14 @@ void vga_printint(int val){
 		vga_printch(buffer[i]);
 }
 
-void vga_printhex(uint32_t val){
+void vga_printhex(uint32_t val) {
 	char hex_val[] = "0123456789ABCDEF";
-	char buffer[9];
-	int i = 0;
-	if (val == 0){
-		vga_printch('0');
-		return;
-	}
-	while (val){
-		buffer[i++] = hex_val[val & 0x0F];
+	char buffer[8];
+	for (int i = 7; i >= 0; i--) {
+		buffer[i] = hex_val[val & 0x0F];
 		val >>= 4;
 	}
 	vga_printstr("0x");
-	while (i-- > 0)
+	for (int i = 0; i < 8; i++)
 		vga_printch(buffer[i]);
 }
