@@ -5,6 +5,7 @@
 #include "../arch/x86/irq.h"
 #include "../arch/x86/pit.h"
 #include "../arch/x86/kbd.h"
+#include "bugshell/shell.h"
 void kernel_init_all(){
 	vga_init();
 	kprintf("VGA Initialized\n");
@@ -18,4 +19,8 @@ void kernel_init_all(){
 	kprintf("PIT Installed\n");
 	kbd_install();
 	kprintf("KBD Installed\n");
+
+	kprintf("\nWelcome to MyOS / JM-Pilot OS\nThis is still in development expect bugs\n\n");
+
+	shell_init();
 }

@@ -13,6 +13,7 @@ C_FLAGS = -ffreestanding \
 	  -std=gnu11 \
 	  -Wall \
 	  -Wextra \
+	  -I$(INC_DIR) \
 	  -c
 
 LD_FLAGS = -ffreestanding \

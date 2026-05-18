@@ -1,5 +1,6 @@
 #include "vga.h"
 #include <stdint.h>
+#include "../arch/x86/asm.h"
 uint16_t *vga = (uint16_t*)0xB8000;
 uint16_t vga_cursor_x;
 uint16_t vga_cursor_y;
@@ -45,13 +46,16 @@ void vga_printch(char c){
 			if (vga_cursor_y >= VGA_HEIGHT){
 				vga_scroll_up();
 			}
+			vga_mv_cursor(vga_cursor_x, vga_cursor_y);
 			return;
 		case '\r':
 			vga_cursor_x = 0;
+			vga_mv_cursor(vga_cursor_x, vga_cursor_y);
 			return;	
 		case '\b':
 			if (vga_cursor_x == 0) return;
 			vga_cursor_x--;
+			vga_mv_cursor(vga_cursor_x, vga_cursor_y);
 			return;
 		case '\t':
 			if (vga_cursor_x + 4 >= VGA_WIDTH && vga_cursor_y < VGA_HEIGHT){
@@ -59,6 +63,7 @@ void vga_printch(char c){
 				vga_cursor_y++;
 			}
 			vga_cursor_x += 4;
+			vga_mv_cursor(vga_cursor_x, vga_cursor_y);
 			return;
 	}
 	vga[get_vga_cell_pos(vga_cursor_x++, vga_cursor_y)] = 
@@ -70,6 +75,7 @@ void vga_printch(char c){
 	if (vga_cursor_y >= VGA_HEIGHT){
 		vga_scroll_up();
 	}
+	vga_mv_cursor(vga_cursor_x, vga_cursor_y);
 }
 void vga_printstr(const char *s){
 	for (int i = 0; s[i] != '\0'; i++)
@@ -103,4 +109,17 @@ void vga_printhex(uint32_t val) {
 	vga_printstr("0x");
 	for (int i = 0; i < 8; i++)
 		vga_printch(buffer[i]);
+}
+
+/* NOTE: we dont want to use much data and the size of the screen is 
+ * 80*25 (w * h)
+ */
+
+void vga_mv_cursor(uint8_t x, uint8_t y){
+	uint16_t pos = get_vga_cell_pos(x, y);
+
+	outb(0x3D4, 0x0F);
+	outb(0x3D5, (uint8_t) (pos & 0xFF));
+	outb(0x3D4, 0x0E);
+	outb(0x3D5, (uint8_t) ((pos >> 8) & 0xFF));
 }
