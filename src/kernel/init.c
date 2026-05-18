@@ -1,4 +1,4 @@
-#include "kernel.h"
+#include <kernel/kernel.h>
 #include "../drivers/vga.h"
 #include "../arch/x86/gdt.h"
 #include "../arch/x86/idt.h"
@@ -6,7 +6,8 @@
 #include "../arch/x86/pit.h"
 #include "../arch/x86/kbd.h"
 #include "bugshell/shell.h"
-void kernel_init_all(){
+#include "../mem/mem.h"
+void kernel_init_all(struct multiboot_info *mb_i){
 	vga_init();
 	kprintf("VGA Initialized\n");
 	gdt_init();
@@ -20,6 +21,8 @@ void kernel_init_all(){
 	kbd_install();
 	kprintf("KBD Installed\n");
 
+	kprintf("MM Initialized\n");
+	mem_init(mb_i);
 	kprintf("\nWelcome to MyOS / JM-Pilot OS\nThis is still in development expect bugs\n\n");
 
 	shell_init();

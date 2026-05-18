@@ -3,5 +3,5 @@
 #define STDIO_H
 
 char getch();
-char* getstr(char *buffer, uint32_t size);
+char* gets(char *buffer, uint32_t size);
 #endif

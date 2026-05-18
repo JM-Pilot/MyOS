@@ -7,7 +7,7 @@ char getch(){
 	return ch;
 }
 
-char* getstr(char *buffer, uint32_t size){
+char* gets(char *buffer, uint32_t size){
 	uint32_t i = 0;
 	char c;
 	while ((c = getch()) != '\n' && i < size){

@@ -123,3 +123,11 @@ void vga_mv_cursor(uint8_t x, uint8_t y){
 	outb(0x3D4, 0x0E);
 	outb(0x3D5, (uint8_t) ((pos >> 8) & 0xFF));
 }
+
+void vga_clear(){
+	for (int j = 0; j < VGA_HEIGHT; j++)
+		for (int i = 0; i < VGA_WIDTH; i++)
+			vga_mk_entry_at(' ', vga_mk_color(vga_color_fg, vga_color_bg), i, j);
+	vga_cursor_x = 0;
+	vga_cursor_y = 0;
+}

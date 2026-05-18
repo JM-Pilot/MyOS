@@ -1,7 +1,7 @@
 #include <stdint.h>
 #include "idt.h"
 #include "irq.h"
-#include "../../kernel/kernel.h"
+#include <kernel/kernel.h>
 #include "../../drivers/vga.h"
 
 const char *exception_messages[] = {
