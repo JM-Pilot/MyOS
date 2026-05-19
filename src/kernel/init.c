@@ -6,7 +6,11 @@
 #include "../arch/x86/pit.h"
 #include "../arch/x86/kbd.h"
 #include "bugshell/shell.h"
-#include "../mem/mem.h"
+#include "../mem/pmm.h"
+#include "../mem/heap.h"
+
+uint8_t mem[4096];
+heap_bm_t heap;	
 void kernel_init_all(struct multiboot_info *mb_i){
 	vga_init();
 	kprintf("VGA Initialized\n");
@@ -21,8 +25,13 @@ void kernel_init_all(struct multiboot_info *mb_i){
 	kbd_install();
 	kprintf("KBD Installed\n");
 
-	kprintf("MM Initialized\n");
-	mem_init(mb_i);
+	pmm_init(mb_i);
+	kprintf("PMM Initialized\n");
+
+	heap_init(&heap);
+	heap_add_block(&heap, (uintptr_t)mem, 4096, 16);
+	kprintf("HEAP Initialized\n");
+	
 	kprintf("\nWelcome to MyOS / JM-Pilot OS\nThis is still in development expect bugs\n\n");
 
 	shell_init();

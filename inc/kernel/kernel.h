@@ -1,7 +1,11 @@
 #include "../../src/entry/multiboot.h"
+#include "../../src/mem/heap.h"
 #include <stdarg.h>
 #ifndef KERNEL_H
 #define KERNEL_H
+
+extern uint8_t mem[4096];
+extern heap_bm_t heap;
 
 /* Kernel Print Formatted
  * Code from my old project
