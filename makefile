@@ -22,7 +22,10 @@ LD_FLAGS = -ffreestanding \
 
 C_OBJS = $(patsubst $(SRC_DIR)/%.c, $(BIN_DIR)/$(SRC_DIR)/%.c.o, $(shell find $(SRC_DIR) -iname "*.c"))
 AS_OBJS = $(patsubst $(SRC_DIR)/%.s, $(BIN_DIR)/$(SRC_DIR)/%.s.o, $(shell find $(SRC_DIR) -iname "*.s"))
-OBJS = $(C_OBJS) $(AS_OBJS)
+
+FONT_SRC = $(SRC_DIR)/misc/cp850-8x16.psfu
+FONT_OBJ = $(patsubst $(SRC_DIR)/%.psfu, $(BIN_DIR)/$(SRC_DIR)/%.psfu.o, $(FONT_SRC))
+OBJS = $(C_OBJS) $(AS_OBJS) $(FONT_OBJ)
 
 $(BIN_DIR)/$(SRC_DIR)/%.c.o: $(SRC_DIR)/%.c
 	mkdir -p $(dir $@)
@@ -31,6 +34,11 @@ $(BIN_DIR)/$(SRC_DIR)/%.c.o: $(SRC_DIR)/%.c
 $(BIN_DIR)/$(SRC_DIR)/%.s.o: $(SRC_DIR)/%.s
 	mkdir -p $(dir $@)
 	$(AS) $< -o $@
+
+$(BIN_DIR)/$(SRC_DIR)/%.psfu.o: $(SRC_DIR)/%.psfu
+	mkdir -p $(dir $@)
+	objcopy -O elf32-i386 -B i386 -I binary $< $@
+	readelf -sW $@
 
 $(BIN_DIR)/$(OUTPUT).bin: $(OBJS)
 	$(CC) $(LD_FLAGS) $^ -o $@

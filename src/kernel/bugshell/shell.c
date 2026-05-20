@@ -1,4 +1,5 @@
-#include "../../drivers/vga.h"
+#include "../console.h"
+#include "../../drivers/video/vgafb.h"
 #include <kernel/kernel.h>
 #include <kernel/lib/string.h>
 #include <kernel/lib/stdio.h>
@@ -13,7 +14,9 @@ void parse_input(){
 	}
 	if (strncmp(buffer, "clear ", 6) == 0 || 
 		strncmp(buffer, "clear", 5) == 0){
-			vga_clear();
+			vgafb_clear();
+			console_main.cursor_x = 0;
+			console_main.cursor_y = 0;
 	}
 }
 void shell_init(){
@@ -23,7 +26,7 @@ void shell_init(){
 
 void sh_mn_loop(){
 	memset(buffer, 0, 1024);
-	vga_printstr("$ ");
+	printstr("$ ");
 	gets(buffer, 1024);
 	kprintf("\n");
 	parse_input();

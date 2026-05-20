@@ -1,5 +1,5 @@
 #include <kernel/kernel.h>
-#include "../drivers/vga.h"
+#include "../kernel/console.h"
 #include <kernel/lib/stdio.h>
 #include <kernel/lib/string.h>
 #include "bugshell/shell.h"
@@ -11,18 +11,13 @@ void hcf(){
 		asm volatile ("hlt");
 }
 void kernel_main(struct multiboot_info *mb_i){
+	if (mb_i == NULL) while(1);
+	uint32_t *test = (uint32_t *)mb_i->framebuffer_addr;
+	test[0] = 0xFFFFFF;
 	asm volatile ("cli");
 	kernel_init_all(mb_i);
 	asm volatile ("sti");
-	
-	void *a = heap_alloc(&heap, 32);
-	void *b = heap_alloc(&heap, 64);
-	heap_free(&heap, a);
-	void *c = heap_alloc(&heap, 16);
-	kprintf("a = %x\n", a);
-	kprintf("b = %x\n", b);
-	kprintf("c = %x\n", c);
-	kprintf("fblock = %x\n", heap.fblock);
+
 	while (1) {
 		sh_mn_loop();
 	}

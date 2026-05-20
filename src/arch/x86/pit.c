@@ -2,7 +2,7 @@
 #include "asm.h"
 #include "pit.h"
 #include "idt.h"
-#include "../../drivers/vga.h"
+#include "../../kernel/console.h"
 #include "irq.h"
 void timer_phase(int hz){
 	int divisor = 1193180 / hz;

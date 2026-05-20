@@ -1,7 +1,6 @@
 #include "idt.h"
 #include "irq.h"
 #include "asm.h"
-#include "../../drivers/vga.h"
 #include <stdint.h>
 
 extern uint32_t irq_stub_table[16];

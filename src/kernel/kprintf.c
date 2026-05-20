@@ -1,6 +1,6 @@
 #include <stdarg.h>
 #include <stdint.h>
-#include "../drivers/vga.h"
+#include "console.h"
 
 void kprintf(const char *str, ...){
 	va_list args;
@@ -10,27 +10,27 @@ void kprintf(const char *str, ...){
 			str++;
 			switch (*str) {
 				case 'c':
-					vga_printch((char)va_arg(args, int));
+					printch((char)va_arg(args, int));
 					break;
 				case 's':
-					vga_printstr(va_arg(args, const char*));
+					printstr(va_arg(args, const char*));
 					break;
 				case 'd':
-					vga_printint(va_arg(args, int));
+					printint(va_arg(args, int));
 					break;
 				case 'x':
-					vga_printhex(va_arg(args, uint32_t));
+					printhex(va_arg(args, uint32_t));
 					break;
 				case '%':
-					vga_printch('%');
+					printch('%');
 					break;
 				default:
-					vga_printch('c');
-					vga_printch(*str);
+					printch('c');
+					printch(*str);
 					break;
 			}
 		} else {
-			vga_printch(*str);
+			printch(*str);
 		}
 		str++;
 	}

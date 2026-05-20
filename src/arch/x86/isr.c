@@ -2,7 +2,7 @@
 #include "idt.h"
 #include "irq.h"
 #include <kernel/kernel.h>
-#include "../../drivers/vga.h"
+#include "../../kernel/console.h"
 
 const char *exception_messages[] = {
 	"Division By Zero",
@@ -31,9 +31,9 @@ void isr_exception_handler(struct registers *reg){
 		irq_handler(reg);
 	}
 	if (reg->int_no < 32){
-		vga_cursor_x = 0;
-		vga_cursor_y = 0;
-		vga_color_fg = VGA_COLOR_LIGHT_RED;
+		console_main.cursor_x = 0;
+		console_main.cursor_y = 0;
+		console_main.fg = 0xFF0000;
 		kprintf("INTERRUPT REACHED!\tERROR: %d\t(%s)\n", reg->int_no, (reg->int_no < 19 ? exception_messages[reg->err_code] : "reserved"));
 		kprintf("REBOOT YOUR COMPUTER\n");
 		kprintf("EAX: %x, ECX: %x, EDX: %x, EBX: %x\n", 

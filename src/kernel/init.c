@@ -1,5 +1,6 @@
 #include <kernel/kernel.h>
-#include "../drivers/vga.h"
+#include "../drivers/video/vgafb.h"
+#include "../drivers/video/psf.h"
 #include "../arch/x86/gdt.h"
 #include "../arch/x86/idt.h"
 #include "../arch/x86/irq.h"
@@ -8,14 +9,22 @@
 #include "bugshell/shell.h"
 #include "../mem/pmm.h"
 #include "../mem/heap.h"
+#include "console.h"
+
+#define CHECK_FLAG(flags,bit)   ((flags) & (1 << (bit)))
 
 uint8_t mem[4096];
 heap_bm_t heap;	
 void kernel_init_all(struct multiboot_info *mb_i){
-	vga_init();
-	kprintf("VGA Initialized\n");
+	vgafb_init(mb_i);
+	console_init();
+	kprintf("VGA FRAMEBUFFER Initialized\n");
+	kprintf("%dx%d\n", mb_i->framebuffer_width, mb_i->framebuffer_height);
+	kprintf("%dx%d\n", fb_width, fb_height);
+
 	gdt_init();
 	kprintf("GDT Initialized\n");
+
 	idt_init();
 	kprintf("IDT Initialized\n");
 	irq_init();

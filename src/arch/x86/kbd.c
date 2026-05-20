@@ -2,7 +2,6 @@
 #include "irq.h"
 #include "asm.h"
 #include <stdint.h>
-#include "../../drivers/vga.h"
 #include <stdbool.h>
 
 char kbdus[128] = {
