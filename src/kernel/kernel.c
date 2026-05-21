@@ -11,9 +11,6 @@ void hcf(){
 		asm volatile ("hlt");
 }
 void kernel_main(struct multiboot_info *mb_i){
-	if (mb_i == NULL) while(1);
-	uint32_t *test = (uint32_t *)mb_i->framebuffer_addr;
-	test[0] = 0xFFFFFF;
 	asm volatile ("cli");
 	kernel_init_all(mb_i);
 	asm volatile ("sti");

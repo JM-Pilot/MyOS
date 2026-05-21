@@ -13,4 +13,5 @@ uint32_t vgafb_get_pos(uint32_t x, uint32_t y);
 void vgafb_init(struct multiboot_info *mb_i);
 void vgafb_plot_pixel(uint32_t col, int x, int y);
 void vgafb_clear();
+void vgafb_fill(uint32_t col);
 #endif

@@ -19,9 +19,7 @@ void kernel_init_all(struct multiboot_info *mb_i){
 	vgafb_init(mb_i);
 	console_init();
 	kprintf("VGA FRAMEBUFFER Initialized\n");
-	kprintf("%dx%d\n", mb_i->framebuffer_width, mb_i->framebuffer_height);
-	kprintf("%dx%d\n", fb_width, fb_height);
-
+	
 	gdt_init();
 	kprintf("GDT Initialized\n");
 
@@ -40,7 +38,7 @@ void kernel_init_all(struct multiboot_info *mb_i){
 	heap_init(&heap);
 	heap_add_block(&heap, (uintptr_t)mem, 4096, 16);
 	kprintf("HEAP Initialized\n");
-	
+
 	kprintf("\nWelcome to MyOS / JM-Pilot OS\nThis is still in development expect bugs\n\n");
 
 	shell_init();

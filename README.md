@@ -4,6 +4,8 @@ A kernel using GRUB as its bootloader and licensed under MIT License.
 
 Written purely by me and helped by a bunch of tutorials such as: www.osdev.wiki, wiki.osdev.org, and bran's kernel dev so shout out to them
 
+This is just a learning Operating System so nothing serious 
+
 <h3>Compiling and Running</h3>
 Before you run make sure you have these tools installed
 

@@ -19,4 +19,7 @@ void hcf();
 
 /* Initialize all important kernel stuff */
 void kernel_init_all(struct multiboot_info *mb_i);
+
+/* i Panik */
+void panic(const char *msg);
 #endif

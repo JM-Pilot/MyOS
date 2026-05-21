@@ -29,3 +29,8 @@ void vgafb_clear(){
 	uint8_t *addr = (uint8_t*)fb_addr;
 	memset(addr, 0, fb_pitch * fb_height);
 }
+void vgafb_fill(uint32_t col){
+	uint32_t *addr = (uint32_t*)fb_addr;
+	for (int i = 0; i < (fb_pitch / 4) * fb_height; i++)
+        	addr[i] = col;
+}
