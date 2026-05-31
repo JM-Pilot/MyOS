@@ -1,5 +1,4 @@
 <h1 align="center">My own hobby x86_32 Operating System</h1>
-<h2>This will soon will be deprecated due to the new mOS32 being developed </h2>
 <h3>Info</h3>
 A kernel using GRUB as its bootloader and licensed under MIT License.
 
