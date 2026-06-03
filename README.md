@@ -1,5 +1,7 @@
 <h1 align="center">My own hobby x86_32 Operating System</h1>
+<h2> PROJECT NOW DISCONTINUED, THE CONTINUED PROJECT IS AT https://github.com/JM-Pilot/mOS32
 <h3>Info</h3>
+
 A kernel using GRUB as its bootloader and licensed under MIT License.
 
 Written purely by me and helped by a bunch of tutorials such as: www.osdev.wiki, wiki.osdev.org, and bran's kernel dev so shout out to them
